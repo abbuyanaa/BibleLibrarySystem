@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>13</zoom_level>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>26</x>
+      <y>26</y>
+      <w>286</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>Login
+
+--
+-id PK
+--
+-user_code VARCHAR
+--
+-user_pass VARCHAR</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>598</x>
+      <y>403</y>
+      <w>221</w>
+      <h>338</h>
+    </coordinates>
+    <panel_attributes>book
+
+--
+-id PK
+--
+-name VARCHAR
+--
+-tailbar TEXT
+--
+-year INT
+--
+-qty INT
+--
+-qrcode INT
+--
+-qrimage BLOB
+--
+-image BLOB
+--
+-created_at DATETIME
+--
+-updated_at DATETIME</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>338</x>
+      <y>26</y>
+      <w>234</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>company
+
+--
+-id PK
+--
+-name VARCHAR
+--
+-created_at DATETIME</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>338</x>
+      <y>208</y>
+      <w>234</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>authors
+
+--
+-id PK
+--
+-name VARCHAR
+--
+-created_at DATETIME</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>338</x>
+      <y>390</y>
+      <w>234</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>languages
+
+--
+-id PK
+--
+-name VARCHAR</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>26</x>
+      <y>208</y>
+      <w>286</w>
+      <h>403</h>
+    </coordinates>
+    <panel_attributes>users
+
+--
+-id PK
+--
+-first_name VARCHAR
+--
+-last_name VARCHAR
+--
+-email VARCHAR
+--
+-regid VARCHAR
+--
+-address TEXT
+--
+-phone INT
+--
+-gender enum('m','f')
+--
+-type enum('t','o','w','g')
+--
+-assembly_id FK
+--
+-profile BLOB
+--
+-created_at DATETIME
+--
+-updated_at DATETIME</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>598</x>
+      <y>221</y>
+      <w>221</w>
+      <h>169</h>
+    </coordinates>
+    <panel_attributes>category_basic
+
+--
+-id PK
+--
+-name VARCHAR
+--
+-created_at DATETIME</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>949</x>
+      <y>221</y>
+      <w>234</w>
+      <h>169</h>
+    </coordinates>
+    <panel_attributes>category_sub
+
+--
+-id PK
+--
+-name VARCHAR
+--
+-created_at DATETIME</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>767</x>
+      <y>26</y>
+      <w>234</w>
+      <h>169</h>
+    </coordinates>
+    <panel_attributes>category
+
+--
+-id PK
+--
+-basic_id FK
+--
+-sub_id FK</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>338</x>
+      <y>546</y>
+      <w>234</w>
+      <h>286</h>
+    </coordinates>
+    <panel_attributes>book_users
+
+--
+-id PK
+--
+-user_id FK
+--
+-book_id FK
+--
+-overdue_at INT
+--
+-mongo INT
+--
+-status enum(0,1)
+--
+-giving_at DATETIME
+--
+-receipt_at DATETIME</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>949</x>
+      <y>429</y>
+      <w>247</w>
+      <h>299</h>
+    </coordinates>
+    <panel_attributes>book_details
+
+--
+-id PK
+--
+-book_id UNIQUE
+--
+-author_id FK
+--
+-lang_id FK
+--
+-basic_id FK
+--
+-sub_id FK NULL
+--
+-company_id FK
+--
+-bible enum(0, 1)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>52</x>
+      <y>702</y>
+      <w>234</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>assembly
+
+--
+-id PK
+--
+-name VARCHAR
+--
+-created_at DATETIME</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
