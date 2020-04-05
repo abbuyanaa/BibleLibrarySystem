@@ -117,6 +117,7 @@
             this.dataGridRent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridRent.Location = new System.Drawing.Point(12, 192);
             this.dataGridRent.Name = "dataGridRent";
+            this.dataGridRent.RowHeadersWidth = 51;
             this.dataGridRent.RowTemplate.Height = 24;
             this.dataGridRent.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridRent.Size = new System.Drawing.Size(1458, 499);
@@ -157,6 +158,8 @@
             this.bookCode.Size = new System.Drawing.Size(250, 34);
             this.bookCode.TabIndex = 1;
             this.bookCode.TextChanged += new System.EventHandler(this.bookCode_TextChanged);
+            this.bookCode.Enter += new System.EventHandler(this.bookCode_Enter);
+            this.bookCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.bookCode_KeyDown);
             // 
             // label2
             // 

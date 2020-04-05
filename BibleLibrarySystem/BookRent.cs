@@ -158,64 +158,6 @@ namespace BibleLibrarySystem
 
         private void bookCode_TextChanged(object sender, EventArgs e)
         {
-            try
-            {
-                con.Close();
-                string book_code = bookCode.Text;
-                if (!book_code.Equals(""))
-                {
-                    try
-                    {
-                        string query = "SELECT * FROM `book` WHERE `id`='" + book_code + "'";
-                        using (command = new MySqlCommand(query, con))
-                        {
-                            con.Open();
-                            reader = command.ExecuteReader();
-                            if (reader.Read())
-                            {
-                                int book_no = reader.GetInt32("id");
-                                string bname = firstCharToUpper(reader.GetString("name"));
-                                string btailbar = firstCharToUpper(reader.GetString("tailbar"));
-                                int book_year = reader.GetInt32("year");
-                                byte[] rawData;
-                                MemoryStream ms;
-                                int FileSize;
-                                Bitmap outImage;
-                                FileSize = 10485760;
-                                //FileSize =reader.GetUInt32(reader.GetOrdinal("image"));
-                                rawData = new byte[FileSize];
-                                reader.GetBytes(reader.GetOrdinal("image"), 0,rawData,0, (int)FileSize);
-
-                                ms = new MemoryStream(rawData);
-                                outImage = new Bitmap(ms);
-                                dataGridRent.Rows.Add(book_no, bname, book_year, outImage);
-
-                                //if (num < userIndex)
-                                //{
-                                //    dataGridRent.Rows.Add(book_no, bname, book_year,outImage);
-                                //    Console.WriteLine("DataGridBook: " + book_no);
-                                //    row[num] = book_no;
-                                //    num++;
-                                //}
-                                //else
-                                //{
-                                //    MessageBox.Show(user_type + " нэг дор " + userIndex + "ш ном авах боломжтой!", "Анхаар!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                //}
-                                bookCode.Text = "";
-                            }
-                            con.Close();
-                        }
-                    }
-                    catch (MySqlException ex)
-                    {
-                        showMessage("Book get data: " + ex.Message);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                showMessage("Book code: " + ex.Message);
-            }
         }
 
         private bool existRent(int user_id)
@@ -318,6 +260,75 @@ namespace BibleLibrarySystem
             catch (MySqlException ex)
             {
                 showMessage("Book minus: " + ex.Message);
+            }
+        }
+
+        private void bookCode_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bookCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                try
+                {
+                    con.Close();
+                    string book_code = bookCode.Text;
+                    if (!book_code.Equals(""))
+                    {
+                        try
+                        {
+                            string query = "SELECT * FROM `book` WHERE `id`='" + book_code + "'";
+                            using (command = new MySqlCommand(query, con))
+                            {
+                                con.Open();
+                                reader = command.ExecuteReader();
+                                if (reader.Read())
+                                {
+                                    int book_no = reader.GetInt32("id");
+                                    string bname = firstCharToUpper(reader.GetString("name"));
+                                    string btailbar = firstCharToUpper(reader.GetString("tailbar"));
+                                    int book_year = reader.GetInt32("year");
+                                    byte[] rawData;
+                                    MemoryStream ms;
+                                    int FileSize;
+                                    Bitmap outImage;
+                                    FileSize = 10485760;
+                                    //FileSize =reader.GetUInt32(reader.GetOrdinal("image"));
+                                    rawData = new byte[FileSize];
+                                    reader.GetBytes(reader.GetOrdinal("image"), 0, rawData, 0, (int)FileSize);
+
+                                    ms = new MemoryStream(rawData);
+                                    outImage = new Bitmap(ms);
+                                    dataGridRent.Rows.Add(book_no, bname, book_year, outImage);
+
+                                    //if (num < userIndex)
+                                    //{
+                                    //    dataGridRent.Rows.Add(book_no, bname, book_year,outImage);
+                                    //    Console.WriteLine("DataGridBook: " + book_no);
+                                    //    row[num] = book_no;
+                                    //    num++;
+                                    //}
+                                    //else
+                                    //{
+                                    //    MessageBox.Show(user_type + " нэг дор " + userIndex + "ш ном авах боломжтой!", "Анхаар!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    //}
+                                }
+                                con.Close();
+                            }
+                        }
+                        catch (MySqlException ex)
+                        {
+                            showMessage("Book get data: " + ex.Message);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    showMessage("Book code: " + ex.Message);
+                }
             }
         }
     }
