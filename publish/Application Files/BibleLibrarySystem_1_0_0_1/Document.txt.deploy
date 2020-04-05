@@ -1,0 +1,178 @@
+﻿Login: SELECT * FROM `login` WHERE `user_code`=@code AND `user_pass`=@pass
+
+Author:
+    Read - OK
+SELECT * FROM `authors` ORDER BY `id` DESC
+SELECT * FROM `authors` ORDER BY `name` ASC
+SELECT * FROM `authors` WHERE `name`=?
+    Insert - OK
+INSERT INTO `authors`(`name`) VALUES (?)
+    Update - OK
+UPDATE `authors` SET `name`=? WHERE `id`=?
+    Delete - OK
+DELETE FROM `authors` WHERE `id`=?
+--------------------------------------------------------------------------------
+
+Language:
+    Read - OK
+SELECT * FROM `languages` ORDER BY `id` DESC
+    Insert - OK
+INSERT INTO `languages`(`name`) VALUES (?)
+    Update - OK
+UPDATE `languages` SET `name`=? WHERE `id`=?
+    Delete - OK
+DELETE FROM `languages` WHERE `id`
+--------------------------------------------------------------------------------
+
+Company:
+    Read - OK
+SELECT * FROM `company` ORDER BY `id` DESC
+SELECT * FROM `company` ORDER BY `name` ASC
+    Insert - OK
+INSERT INTO `company`(`name`) VALUES (?)
+    Update - OK
+UPDATE `company` SET `name`=? WHERE `id`=?
+    Delete - OK
+DELETE FROM `company` WHERE `id`=?
+--------------------------------------------------------------------------------
+
+Category Basic:
+    Read - OK
+SELECT * FROM `category_basic` ORDER BY `id` DESC
+	Check - OK
+SELECT * FROM `category_basic` WHERE `name`=?
+	Exist - OK
+SELECT COUNT(*) AS count FROM `category_basic` WHERE `name`=''
+    Insert - OK
+INSERT INTO `category_basic`(`name`) VALUES (?)
+    Update - OK
+UPDATE `category_basic` SET `name`=? WHERE `id`=?
+    Delete - OK
+DELETE FROM `category_basic` WHERE `id`=?
+--------------------------------------------------------------------------------
+
+Category Sub:
+    Read - OK
+SELECT cs.* FROM category_basic AS cb 
+INNER JOIN category AS c ON c.basic_id = cb.id 
+INNER JOIN category_sub AS cs ON cs.id = c.sub_id 
+WHERE cb.id = ''
+ORDER BY cs.id DESC
+
+SELECT * FROM category_basic AS cb 
+INNER JOIN category AS c ON c.basic_id = cb.id 
+INNER JOIN category_sub AS cs ON cs.id = c.sub_id 
+WHERE cb.id = '';
+
+    Insert - OK
+INSERT INTO `category`(`basic_id`, `sub_id`) VALUES (,SELECT `id` FROM `category_sub` ORDER BY `id` DESC LIMIT 1)
+SELECT `id` FROM `category_sub` ORDER BY `id` DESC LIMIT 1
+    Update - OK
+UPDATE `category_sub` SET `name`=@name WHERE `id`=@id
+
+    Delete - OK
+DELETE FROM `category_sub` WHERE `id`=@id
+DELETE FROM `category` WHERE `basic_id`, `sub_id`
+
+Category:
+    Insert: - OK
+INSERT INTO `category`(`basic_id`, `sub_id`) VALUES (?,?)
+    Delete - OK
+DELETE FROM `category` WHERE `basic_id`=? AND `sub_id`=?
+
+SELECT cs.* FROM category_sub AS cs 
+INNER JOIN category AS c ON c.sub_id = cs.id 
+WHERE c.basic_id = '' ORDER BY cs.name ASC
+
+Book:
+SELECT b.id, b.name AS bname, b.tailbar, b.qty, a.name AS aname, l.name AS lname, cb.name AS cbname, c.name AS compani, bd.bible FROM book AS b 
+INNER JOIN book_details AS bd ON bd.book_id = b.id 
+INNER JOIN `authors` AS a ON a.id = bd.author_id 
+INNER JOIN languages AS l ON l.id = bd.lang_id 
+INNER JOIN category_basic AS cb ON cb.id = bd.basic_id 
+INNER JOIN category_sub AS cs on. cs.id = bd.sub_id 
+INNER JOIN company AS c ON c.id = bd.company_id 
+ORDER BY b.id DESC
+
+
+SELECT 
+b.id as '№', b.image as 'Зураг', b.name as 'Нэр', a.name AS 'Зохиолч', b.tailbar as 'Тайлбар',
+cb.name AS 'Үндсэн', cs.name AS 'Дэд', b.year as 'Гарсан он', b.qty as 'Ширхэг',
+l.name AS 'Хэл', c.name AS 'Байгууллага'
+FROM book AS b INNER JOIN book_details AS bd ON bd.book_id = b.id 
+INNER JOIN `authors` AS a ON a.id = bd.author_id 
+INNER JOIN languages AS l ON l.id = bd.lang_id 
+INNER JOIN category_basic AS cb ON cb.id = bd.basic_id 
+INNER JOIN category_sub AS cs ON cs.id = bd.sub_id 
+INNER JOIN company AS c ON c.id = bd.company_id 
+WHERE CONCAT(b.name, b.year, b.qrcode, a.name, l.name, cb.name, cs.name, c.name) LIKE '%уух зүйл%'
+ORDER BY b.id DESC
+
+SELECT b.*, bd.author_id, bd.lang_id, bd.basic_id, bd.sub_id, bd.company_id, bd.bible FROM book AS b INNER JOIN book_details AS bd ON bd.book_id = b.id WHERE b.id = 1
+
+SELECT `id` FROM `book` ORDER BY `id` DESC LIMIT 1
+
+SELECT 
+b.id, b.image, b.name, b.tailbar, b.year, b.qty, b.qrcode,
+a.name AS author, l.name AS lang, cb.name AS basic, cs.name AS sub, com.name AS company
+FROM book AS b 
+INNER JOIN book_details AS bd ON bd.book_id = b.id 
+INNER JOIN authors AS a ON a.id = bd.author_id 
+INNER JOIN languages AS l ON l.id = bd.lang_id 
+INNER JOIN category_basic AS cb ON cb.id = bd.basic_id 
+INNER JOIN category_sub AS cs ON cs.id = bd.sub_id 
+INNER JOIN company AS com ON com.id = bd.company_id
+WHERE b.id = 0
+
+    Insert
+INSERT INTO `book`(`name`, `tailbar`, `year`, `qty`, `qrcode`, `image`, `created_at`)
+VALUES (?, ?, ?, ?, ?, ?, NOW())
+
+INSERT INTO `book_details`(`book_id`, `author_id`, `lang_id`, `basic_id`, `sub_id`, `company_id`, `bible`)
+VALUES (?, ?, ?, ?, ?, ?, ?)
+
+    Update:
+UPDATE `book` SET `name`=?, `tailbar`=?, `year`=?, `qty`=?, `qrcode`=?, `image`=? WHERE `id`=?
+UPDATE `book_details` SET `author_id`=?, `lang_id`=?, `basic_id`=?, `sub_id`=?, `company_id`=?, `bible`=? WHERE `book_id`=?
+
+    Delete:
+DELETE FROM `book` WHERE `id`
+DELETE FROM `book_details` WHERE `book_id`=?
+
+
+Users:
+    Select:
+SELECT u.id, u.profile, u.first_name, u.last_name, u.email, u.regid, u.address, u.phone, a.name FROM users AS u 
+INNER JOIN chuulgan AS a ON a.id = u.chuulgan_id 
+ORDER BY u.id DESC
+
+SELECT * FROM `users` WHERE `id` = ?
+SELECT * FROM `users` WHERE `first_name`=? AND `last_name`=?
+SELECT * FROM `users` WHERE `email`=?
+SELECT * FROM `users` WHERE `regid`=?
+SELECT * FROM `users` WHERE GROUP_CONCAT(`first_name`, `last_name`, `email`, `regid`, `address`, `phone`) LIKE '%%'
+
+    Insert:
+INSERT INTO `users`(`first_name`, `last_name`, `email`, `regid`, `address`, `phone`, `gender`, `type`, `chuulgan_id`, `profile`)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+
+    Update:
+UPDATE `users` SET `first_name`=?,`last_name`=?,`email`=?,`regid`=?,`address`=?,`phone`=?,`gender`=?,`type`=?,`chuulgan_id`=?,`profile`=? WHERE `id`=?
+
+    Delete:
+DELETE FROM `users` WHERE `id`=?
+
+Book Rent:
+	Insert:
+INSERT INTO `book_users`
+(`user_id`, `book_id`, `overdue_date`, `mongo`, `status`, `giving_at`, `receipt_at`) VALUES
+(?, ?, ?, ?, ?, ?, (SELECT DATE_ADD('', INTERVAL 21 DAY)))
+UPDATE `book` SET `qty`=`qty`-1 WHERE `id`=?
+
+
+Book Return:
+	Insert:
+SELECT * FROM book_users AS bu 
+INNER JOIN users AS u ON u.id = bu.user_id 
+INNER JOIN book AS b ON b.id = bu.book_id
+WHERE u.id = '' AND b.id = '' AND bu.status = '0'
