@@ -132,7 +132,10 @@ namespace BibleLibrarySystem.Controllers
         {
             try
             {
-                con.Open();
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
                 cb.Items.Clear();
                 String query = "SELECT `name` FROM `" + table + "` ORDER BY `name` ASC";
                 command = new MySqlCommand(query, con);

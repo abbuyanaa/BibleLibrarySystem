@@ -68,6 +68,7 @@
             this.btnPageSetup = new System.Windows.Forms.Button();
             this.btnPreview = new System.Windows.Forms.Button();
             this.printDialog = new System.Windows.Forms.PrintDialog();
+            this.btnAuthorAdd = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bookImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridBook)).BeginInit();
@@ -185,11 +186,12 @@
             // 
             // cbAuthor
             // 
+            this.cbAuthor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAuthor.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbAuthor.FormattingEnabled = true;
             this.cbAuthor.Location = new System.Drawing.Point(346, 105);
             this.cbAuthor.Name = "cbAuthor";
-            this.cbAuthor.Size = new System.Drawing.Size(350, 31);
+            this.cbAuthor.Size = new System.Drawing.Size(269, 31);
             this.cbAuthor.TabIndex = 14;
             this.cbAuthor.SelectedIndexChanged += new System.EventHandler(this.cbAuthor_SelectedIndexChanged);
             // 
@@ -420,6 +422,7 @@
             this.dataGridBook.MultiSelect = false;
             this.dataGridBook.Name = "dataGridBook";
             this.dataGridBook.ReadOnly = true;
+            this.dataGridBook.RowHeadersWidth = 51;
             this.dataGridBook.RowTemplate.Height = 24;
             this.dataGridBook.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridBook.Size = new System.Drawing.Size(1558, 454);
@@ -478,11 +481,22 @@
             this.printDialog.Document = this.printDocument;
             this.printDialog.UseEXDialog = true;
             // 
+            // btnAuthorAdd
+            // 
+            this.btnAuthorAdd.Location = new System.Drawing.Point(621, 105);
+            this.btnAuthorAdd.Name = "btnAuthorAdd";
+            this.btnAuthorAdd.Size = new System.Drawing.Size(75, 31);
+            this.btnAuthorAdd.TabIndex = 42;
+            this.btnAuthorAdd.Text = "button1";
+            this.btnAuthorAdd.UseVisualStyleBackColor = true;
+            this.btnAuthorAdd.Click += new System.EventHandler(this.btnAuthorAdd_Click);
+            // 
             // BookMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1582, 903);
+            this.Controls.Add(this.btnAuthorAdd);
             this.Controls.Add(this.pictureCode);
             this.Controls.Add(this.btnPreview);
             this.Controls.Add(this.btnPageSetup);
@@ -520,6 +534,7 @@
             this.Name = "BookMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Номны бүртгэл";
+            this.Activated += new System.EventHandler(this.BookMain_Activated);
             ((System.ComponentModel.ISupportInitialize)(this.pictureCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bookImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridBook)).EndInit();
@@ -569,5 +584,6 @@
         public System.Windows.Forms.ComboBox cbLang;
         private System.Windows.Forms.PrintDialog printDialog;
         public System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnAuthorAdd;
     }
 }

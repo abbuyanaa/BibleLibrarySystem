@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using BibleLibrarySystem.Controllers;
 using System.Collections;
+using System.IO;
 
 namespace BibleLibrarySystem
 {
@@ -48,7 +49,12 @@ namespace BibleLibrarySystem
             dataGridRent.ColumnCount = 3;
             dataGridRent.Columns[0].Name = "№";
             dataGridRent.Columns[1].Name = "Нэр";
-            dataGridRent.Columns[2].Name = "Зураг";
+            dataGridRent.Columns[2].Name = "Нэр";
+            DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
+            imageColumn.ImageLayout = DataGridViewImageCellLayout.Stretch;
+            dataGridRent.RowTemplate.Height = 200;
+            dataGridRent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridRent.Columns.Add(imageColumn);
             currentDate = DateTime.Now.ToString("yyyy-MM-dd");
         }
 
@@ -171,18 +177,30 @@ namespace BibleLibrarySystem
                                 string bname = firstCharToUpper(reader.GetString("name"));
                                 string btailbar = firstCharToUpper(reader.GetString("tailbar"));
                                 int book_year = reader.GetInt32("year");
+                                byte[] rawData;
+                                MemoryStream ms;
+                                int FileSize;
+                                Bitmap outImage;
+                                FileSize = 10485760;
+                                //FileSize =reader.GetUInt32(reader.GetOrdinal("image"));
+                                rawData = new byte[FileSize];
+                                reader.GetBytes(reader.GetOrdinal("image"), 0,rawData,0, (int)FileSize);
 
-                                if (num < userIndex)
-                                {
-                                    dataGridRent.Rows.Add(book_no, bname, book_year);
-                                    Console.WriteLine("DataGridBook: " + book_no);
-                                    row[num] = book_no;
-                                    num++;
-                                }
-                                else
-                                {
-                                    MessageBox.Show(user_type + " нэг дор " + userIndex + "ш ном авах боломжтой!", "Анхаар!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                }
+                                ms = new MemoryStream(rawData);
+                                outImage = new Bitmap(ms);
+                                dataGridRent.Rows.Add(book_no, bname, book_year, outImage);
+
+                                //if (num < userIndex)
+                                //{
+                                //    dataGridRent.Rows.Add(book_no, bname, book_year,outImage);
+                                //    Console.WriteLine("DataGridBook: " + book_no);
+                                //    row[num] = book_no;
+                                //    num++;
+                                //}
+                                //else
+                                //{
+                                //    MessageBox.Show(user_type + " нэг дор " + userIndex + "ш ном авах боломжтой!", "Анхаар!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //}
                                 bookCode.Text = "";
                             }
                             con.Close();

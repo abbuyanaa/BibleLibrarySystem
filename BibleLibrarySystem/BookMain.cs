@@ -18,8 +18,6 @@ namespace BibleLibrarySystem
     public partial class BookMain : Form
     {
         MySqlConnection con = MyConnection.getConnection();
-        CategoryController category = new CategoryController();
-        BookController book = new BookController();
         MySqlCommand command;
         MySqlDataAdapter adapter;
         MySqlDataReader reader;
@@ -408,6 +406,8 @@ namespace BibleLibrarySystem
                         dataGridBook.AllowUserToAddRows = false;
                         dataGridBook.DataSource = table;
 
+                        table.Rows.Add();
+
                         DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
                         imageColumn = (DataGridViewImageColumn)dataGridBook.Columns[1];
                         imageColumn.ImageLayout = DataGridViewImageCellLayout.Stretch;
@@ -541,6 +541,17 @@ namespace BibleLibrarySystem
             {
                 showMessage("Csub selectedIndex: " + ex.Message);
             }
+        }
+
+        private void btnAuthorAdd_Click(object sender, EventArgs e)
+        {
+            AuthorForm author = new AuthorForm();
+            author.ShowDialog();
+        }
+
+        private void BookMain_Activated(object sender, EventArgs e)
+        {
+            comboBoxes(cbAuthor, "authors");
         }
 
         // Company get id

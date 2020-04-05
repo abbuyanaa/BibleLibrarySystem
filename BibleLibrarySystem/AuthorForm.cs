@@ -50,6 +50,9 @@ namespace BibleLibrarySystem
                     {
                         command.Parameters.Add("@name", MySqlDbType.VarChar).Value = name;
                         executeQuery(command, "Зохиолч амжилттай нэмэгдлээ.");
+                        BookMain main = new BookMain();
+                        CategoryController category = new CategoryController();
+                        category.comboBox(main.cbAuthor, "authors");
                     }
                 }
             }
